@@ -8,6 +8,7 @@ from flask import Flask, request, make_response, render_template
 from flask_limiter import Limiter
 import time
 
+app = Flask(__name__, template_folder='./templates')
 
 class ExtLimiter(Limiter):
     def limit_and_check(self, limiter, delay=0, limit=0):
@@ -56,9 +57,9 @@ def get_subnet(subnet):
 
 
 def main(limit, prefix_subnet, delay):
+    global app
     mask = (1 << 32) - (1 << 32 >> int(prefix_subnet))
     mask_subnet = socket.inet_ntoa(struct.pack(">L", mask))
-    app = Flask(__name__, template_folder='./templates')
     limiter = ExtLimiter(app, default_limits=[limit], key_func=get_subnet(mask_subnet), strategy="moving-window")
 
     @app.route("/", defaults={"path": ""})
