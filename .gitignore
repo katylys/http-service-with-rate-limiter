@@ -128,3 +128,4 @@ dmypy.json
 .gitignore
 venv/
 .idea/
+tests/
