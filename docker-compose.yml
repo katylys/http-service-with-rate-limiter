@@ -1,8 +1,9 @@
-version: '1'
+version: '2'
 services:
-    web:
-        build: .
-        ports:
-            - "5000:5000"
-        volumes:
-            - .:/code
+  python:
+    container_name: http-service-with-rate-limiter
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"

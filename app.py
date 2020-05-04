@@ -67,7 +67,7 @@ def main(limit, prefix_subnet, delay):
     def index(path):
         resp = make_response(render_template('index.html'), 200)
         return resp
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
 def create_parser():
