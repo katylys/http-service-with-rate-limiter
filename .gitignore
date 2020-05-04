@@ -126,5 +126,3 @@ dmypy.json
 .pyre/
 
 .gitignore
-static/
-templates/index.html
