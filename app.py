@@ -61,10 +61,12 @@ def main(limit, prefix_subnet, delay):
     app = Flask(__name__, template_folder='./templates')
     limiter = ExtLimiter(app, default_limits=[limit], key_func=get_subnet(mask_subnet), strategy="moving-window")
 
-    @app.route('/')
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
     @limiter.limit_and_check(limiter, delay=int(delay), limit=limit)
-    def index():
-        return 'INDEX'
+    def index(path):
+        resp = make_response(render_template('index.html'), 200)
+        return resp
     app.run(debug=True)
 
 
