@@ -30,15 +30,7 @@ class Subnet(db.Model):
     subnet = db.Column(db.String(16), index=True)
     date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
 
-def init_db():
-    db.create_all()
-
-    # Create a test user
-    new_user = User('admin', 'password')
-    db.session.add(new_user)
-    db.session.commit()
-
-
-if __name__ == '__main__':
-    init_db()
+    def __init__(self, who_added_id, subnet):
+        self.who_added_id = who_added_id
+        self.subnet = subnet
 
