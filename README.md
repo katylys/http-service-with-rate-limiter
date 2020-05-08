@@ -1,10 +1,59 @@
-# http-service-with-rate-limiter
-HTTP-сервис, способный ограничивать количество запросов (rate limit) из одной подсети IPv4. Если ограничения отсутствуют, то нужно выдавать одинаковый статический контент.
+# HTTP-сервис, способный ограничивать количество запросов по подсетке в момент времени
 
-запускать с параметрами prefix_subnet delay limit
-Например:
---prefix_subnet=24 --delay=120 --limit="2 per 10 second"
+### Описание инструментов
+
+В проекте используются:
+- Flask==1.1.2 
+- Flask-HTTPAuth==4.0.0
+- Flask-Limiter==1.2.1
+- Flask-SQLAlchemy==2.4.1
+- Werkzeug==1.0.1
+
+Для равномерного ограничения запросов в момент выбран алгоритм **Sliding Window (скользящее окно)**.
+В этом алгоритме отслеживается счётчик для каждого окна, а затем учитывается взвешенное значение частоты запросов предыдущего окна на основе текущей временной метки, чтобы сгладить всплески трафика.
+
+## Описание работы сервиса
+
+По умолчанию сервер работает с настройками: ограничение для подсети /24 (маска 255.255.255.0), лимит 100 запросов в минуту, время ожидания после ограничения: 2 минуты.
+
+При начале работы сервиса добавлять подсети в белый список и пользователей может только аккаунт с логином *admin* и папролем *password*. Добавленные пользователи также смогут добавлять новых пользователей и подсети в белый список.
+
+ Начальная страница, которая будет открываться на любые запросы, кроме POST /white_list и /new_user
+
+	curl -i http://127.0.0.1:5000/
 
 
-#curl -u abc:abc -i -X POST -H "Content-Type: application/json" -d "{\"subnet\":\"127.0.0.0\"}" http://127.0.0.1:5000/white_list_subnet
-#curl -i -H "Content-Type: application/json" -X POST -d "{\"username\":\"abc\", \"password\":\"abc\"}" 127.0.0.1:5000/new_user
+ Сброс лимита по префиксу
+
+	curl -u admin:password -i -X POST -H "Content-Type: application/json" -d "	{\"subnet\":\"127.0.0.0\"}" http://127.0.0.1:5000/white_list_subnet
+
+
+Создание нового пользователя
+
+    curl -u admin:password -i -H "Content-Type: application/json" -X  -d "{\"username\":\"abc\", \"password\":\"abc\"}" 127.0.0.1:5000/new_user
+
+
+## Запуск сервиса
+Клонирование репозитория
+
+    git clone https://github.com/katylys/http_service_with_rate_limiter.git
+
+Переход в папку с проектом
+
+    cd http_service_with_rate_limiter
+
+Запуск сервиса с параметрами по умолчанию
+
+    python rate_limiter.py
+
+Запуск сервиса с параметрами
+
+    python rate_limiter.py --prefix_subnet=24 --delay=120 --limit="2 per 10 second"
+
+--delay в секундах
+
+Запуск контейнера с работающим http-сервисом
+
+    docker-compose up
+
+
