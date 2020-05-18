@@ -1,7 +1,7 @@
 version: '2'
 services:
   python:
-    container_name: http-service-with-rate-limiter
+    container_name: http-service-with-rate-app_limiter
     build:
       context: .
       dockerfile: Dockerfile
