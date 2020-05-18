@@ -42,6 +42,10 @@
 
     cd http_service_with_rate_limiter
 
+Установить все нужные зависимости
+
+    pip install -r requirements.txt
+
 Запуск сервиса с параметрами по умолчанию
 
     python run.py 24 120 "100 per 1 minute"
@@ -51,5 +55,3 @@
 Запуск контейнера с работающим http-сервисом
 
     docker-compose up
-
-
