@@ -25,7 +25,7 @@
 
  Сброс лимита по префиксу
 
-	curl -u admin:password -i -X POST -H "Content-Type: application/json" -d "	{\"subnet\":\"127.0.0.0\"}" http://127.0.0.1:5000/white_list_subnet
+	curl -u admin:password -i -X POST -H "Content-Type: application/json" -d "{\"subnet\":\"127.0.0.0\"}" http://127.0.0.1:5000/white_list_subnet
 
 
 Создание нового пользователя(этот handler необходим для защищенного сброса лимита, то есть неавторизованный пользователь не сможет сбросить лимит)
