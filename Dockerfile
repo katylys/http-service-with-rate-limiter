@@ -3,4 +3,4 @@ ADD . /code
 WORKDIR /code
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
-CMD ["rate_limiter.py"]
+CMD ["run.py", "24", "120", "100 per 1 minute"]
