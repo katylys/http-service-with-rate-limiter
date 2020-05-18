@@ -49,7 +49,7 @@ def clear_data(session):
 original_sigint = signal.getsignal(signal.SIGINT)
 
 
-def exit_gracefully(new_app):
+def exit_gracefully():
     def wrap():
         signal.signal(signal.SIGINT, original_sigint)
 

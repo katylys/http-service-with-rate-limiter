@@ -15,7 +15,6 @@ def create_app(prefix_subnet=None, delay=0, limit=None):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     db.app = app
 
     db.init_app(app)
