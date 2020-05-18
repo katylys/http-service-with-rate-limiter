@@ -15,5 +15,5 @@ if __name__ == '__main__':
     db.session.commit()
 
     new_app.run(host='0.0.0.0')
-    wrap_func = exit_gracefully(new_app)
+    wrap_func = exit_gracefully()
     signal.signal(signal.SIGINT, wrap_func)
